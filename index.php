@@ -10,6 +10,7 @@
     $ext = strtoupper($gene);
     $url = $domain . $char . $ext;
     $notFound = "No such data.";
+    $noChemicalReaction = "No Chemical Reactions.";
 
     $document = file_get_contents($url);
     if (strpos($document, $notFound) == 0){

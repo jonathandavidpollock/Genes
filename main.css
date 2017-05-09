@@ -81,6 +81,10 @@ p {
 	line-height: 2.6rem;
 }
 
+strong {
+	font-weight:bold;
+}
+
 .wrapper {
 	max-width:500px;
 	margin:auto;
@@ -104,10 +108,12 @@ input, button {
 	display: block;
 }
 
-form button:first-of-type {
+form button {
 	background-color:#AF6110;
 	padding:2.4rem;
 }
+
+
 
 button:hover{
 	transition:.4s;
@@ -145,5 +151,10 @@ article {
 article p button {
 	padding: 1.5rem 2rem;
 	background-color:#FFD07B;
-	margin-top:3rem;
+	margin:3rem 0;
+	transition:.5s;
+}
+
+article p button:hover {
+	border-radius:10px;
 }
