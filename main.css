@@ -131,6 +131,7 @@ input {
 	padding:.5rem;
 	outline-color:#C48C51;
 	width:100%;
+	border-radius:0px;
 }
 
 img {
