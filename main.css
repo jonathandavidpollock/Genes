@@ -128,7 +128,7 @@ button:hover{
 input {
 	color:#AF6110;
 	font-size:3rem;
-	padding:.5rem;
+	line-height: 3.5rem;
 	outline-color:#C48C51;
 	width:100%;
 	border-radius:0px;
