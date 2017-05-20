@@ -82,7 +82,10 @@ p {
 }
 
 strong {
-	font-weight:bold;
+	font-weight: bold;
+	display: block;
+	font-size: 2.8rem;
+	padding-top: 2.8rem;
 }
 
 .wrapper {
@@ -121,6 +124,19 @@ button:hover{
 	cursor:pointer;
 }
 
+a {
+	color:#02111B;
+	text-decoration: underline;
+	display:block;
+	margin-top:2rem;
+}
+
+a:hover {
+	transition: .2s;
+	text-decoration: underline;
+	color:#475159;
+}
+
 .btnWrap {
 	margin:auto;
 }
@@ -145,6 +161,16 @@ img {
 	width:30px;
 }
 
+b {
+    border-bottom: 2px solid #02111B;
+    font-size: 2.4rem;
+    color: #02111B;
+    font-weight: bold;
+    display: block;
+    padding: 2rem;
+		text-align:center;
+}
+
 article {
 	display:flex;
 	justify-content: center;
@@ -156,13 +182,23 @@ article {
 
 }
 
-article p button {
+article p button, #learnmore {
 	padding: 1.5rem 2rem;
 	background-color:#FFD07B;
 	margin:3rem auto;
 	transition:.5s;
+	text-decoration: none;
+	border-radius:5px;
 }
 
-article p button:hover {
+article p button:hover, #learnmore:hover {
 	border-radius:10px;
+}
+
+@media (max-width:600px) {
+	strong {
+		display:block;
+		padding-top:2rem;
+	}
+
 }
