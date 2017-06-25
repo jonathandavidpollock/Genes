@@ -195,6 +195,17 @@ article p button:hover, #learnmore:hover {
 	border-radius:10px;
 }
 
+.loading {
+	background-color:#ffffff;
+}
+
+.loading p {
+	text-align:center;
+}
+
+.loading img {
+	width:140px;
+}
 @media (max-width:600px) {
 	strong {
 		display:block;

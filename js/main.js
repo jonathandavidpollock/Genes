@@ -1,53 +1,83 @@
-window.addEventListener("load", ()=>{
-  console.log("loaded JS.");
+window.addEventListener("load", () => {
   var form = document.querySelector('form');
   var input = document.querySelector('input');
-  var articleHeader = document.querySelector('article:first-of-type h2');
-  form.addEventListener("submit",(e)=>{
+  var main = document.querySelector('main');
+  var learnmore = document.querySelector('#learnmore')
+  console.log(learnmore);
+  console.log(learnmore.getAttribute('href'))
+
+  form.addEventListener("submit", e => {
+    var articleHeader = document.querySelector('article:first-of-type h2');
+    console.log('form submitted');
+    console.log(`Article Header: ${articleHeader.innerHTML}`);
     e.preventDefault();
+
+    // RESET the article for input becuase
+    // No Results found removed them
+    if (articleHeader.innerHTML == 'No Results Found') {
+      console.log(`Removing "No Results Found" from article`);
+      // Reset the article to original article
+      let article = document.querySelector('article')
+      article.innerHTML = `
+          <article>
+            <h2>PICST_49658</h2>
+            <p><strong>Definition: </strong> <span id="definition">Homeographic Gene</span></p>
+            <p><strong>Pathways: </strong><span id="pathways">No Pathways Exist</span></p>
+            <p><strong>Chemical Reactions: </strong><span id="reactions">No Chemical Reactions Exist</span></p>
+            <p class="btnWrap"><a  href="" target="_blank" id="learnmore">Learn More</a></p>
+          </article>
+        `
+    }
+
+
+    // Get the value of the input
+    // Replace the search value
+    let searchTerm = e.srcElement[0].value;
+    articleHeader.innerHTML = searchTerm;
+
+    // main.appendHTML = '<article class="loading"><p><img src="assets/Loading_icon.gif" alt="spinner"></p></article>';
     console.log("Event Fired");
-    articleHeader.innerHTML = input.value;
     getContent(input.value);
   });
 });
 
-function getContent($gene) {
+function getContent($ext) {
   // Variables
   var $domain = "http://www.genome.jp/dbget-bin/www_bget?pic";
   var $char = ":";
-  var $ext = $gene;
   var $url = $domain + $char + $ext;
-  console.log($url);
-  document.querySelector('#learnmore').setAttribute("href", $url);
   var $noChemicalReaction = "No Chemical Reactions Found.";
   var $noPathways = "No Pathways Found.";
   var $buttonLink = $url;
+
+  console.log(`Going to URL: ${$url}`);
+  document.querySelector('#learnmore').setAttribute("href", $url);
 
   // Get the contents of the url
   let promise = fetch("https://crossorigin.me/" + $url);
   promise.then(response => {
     return response.text();
   })
-    .then((data)=>{
+    .then(data => {
       var doc = data;
       if (!doc.includes("No such data")){
         var defintion = getDefinition(doc);
         var pathways = getPathways(doc);
         var reactions = getReactions(doc)
 
+
         var information = [defintion,pathways,reactions];
         return information;
       } else {
         // Display no Results Found
-        document.querySelector('main').innerHTML = "<article><h2>No Results found</h2></article>";
+        document.querySelector('main').innerHTML = "<article><h2>No Results Found</h2></article>";
       }
-
-
-  }).then(information=>{
-      document.querySelector('#definition').innerHTML = information[0];
-      document.querySelector('#pathways').innerHTML = information[1];
-  })
-  .catch((error)=> {throw error})
+      })
+    .then(information => {
+        document.querySelector('#definition').innerHTML = information[0];
+        document.querySelector('#pathways').innerHTML = information[1];
+      })
+    .catch(error => {throw error})
 }
 
 function getDefinition(doc) {
@@ -66,6 +96,9 @@ function getDefinition(doc) {
 }
 
 function getPathways(doc) {
+  // Spliting the document on these
+  // four Values to extract the
+  // needed items
   let split1 = '<nobr>Pathway</nobr>';
   let split2 = '</table>';
   let split3 = '<div>';
@@ -76,11 +109,11 @@ function getPathways(doc) {
     array = array[1].split(split2);
     array = array[0].split(split3);
     let string = "";
-    array.forEach(function(element){
+    array.forEach(element => {
       if(element.includes(split4)) {
         let ary = element.split(split4);
         let i = 0;
-        ary.forEach(function(el){
+        ary.forEach(el => {
           if(el[0].match(/[a-zA-Z]/i)){
             if (i > 1) {
               string += '&';
@@ -120,7 +153,7 @@ function getReactions(doc) {
     let returnValue = promise.then(response => {
       return response.text();
     })
-      .then((data)=>{
+      .then(data => {
         let reactionPage = data;
         reactionPage = reactionPage.split('<hr>');
         reactionPage = reactionPage[0].split("<pre>");
@@ -131,7 +164,7 @@ function getReactions(doc) {
         reactionPagePRETAG = reactionPagePRETAG.replace('</pre>','</div>');
         document.querySelector("#reactions").innerHTML = reactionPagePRETAG;;
     })
-    .catch((error)=> {throw error})
+    .catch(error => {throw error})
     return returnValue;
   } else {
     return "No Chemical Reaction found.";
