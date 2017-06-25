@@ -179,7 +179,7 @@ article {
 	padding:1rem;
 	margin: 3rem auto;
 	max-width:100%;
-
+	transition: .4s;
 }
 
 article p button, #learnmore {
